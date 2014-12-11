@@ -1,0 +1,38 @@
+{
+  "name": "hapi-agenda",
+  "version": "0.0.0",
+  "description": "agenda plugin for hapi",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/firstandthird/hapi-agenda.git"
+  },
+  "keywords": [
+    "hapi",
+    "agenda"
+  ],
+  "author": "First+Third",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/firstandthird/hapi-agenda/issues"
+  },
+  "homepage": "https://github.com/firstandthird/hapi-agenda",
+  "dependencies": {
+    "agenda": "^0.6.26",
+    "lodash-node": "^2.4.1",
+    "require-all": "^1.0.0"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-concurrent": "^1.0.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-nodemon": "^0.3.0",
+    "grunt-shell": "^1.1.1",
+    "hapi": "^8.0.0",
+    "load-grunt-config": "^0.16.0"
+  }
+}

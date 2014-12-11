@@ -1,0 +1,9 @@
+aliases:
+  - 'jshint'
+jshint:
+  - 'index.js'
+watch:
+  files:
+    - 'index.js'
+  tasks:
+    - 'scripts'

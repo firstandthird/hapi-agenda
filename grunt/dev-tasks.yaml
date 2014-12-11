@@ -1,0 +1,20 @@
+aliases:
+  - 'default'
+  - 'concurrent:dev'
+watch:
+  files:
+    - 'example/**/*'
+    - 'index.js'
+nodemon:
+  script: 'example/index.js'
+shell:
+  command: 'mkdir -p db && mongod --quiet --dbpath ./db'
+  options:
+    stdin: false
+concurrent:
+  tasks:
+    - 'nodemon'
+    - 'watch'
+    - 'shell'
+  options:
+    logConcurrentOutput: true

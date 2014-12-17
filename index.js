@@ -68,7 +68,9 @@ exports.register = function(plugin, options, next) {
   var basePath = options.basePath || '';
   var auth = options.auth || false;
 
-  plugin.route(_.values(require('./json-handler')(basePath, auth)));
+  if(options.jsonApi) {
+    plugin.route(_.values(require('./json-handler')(basePath, auth)));
+  }
 
   next();
 };

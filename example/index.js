@@ -16,7 +16,8 @@ server.register({
     every: {
       '10 seconds': 'say-hello',
       '30 seconds': 'here is a task'
-    }
+    },
+    jsonApi: true
   }
 }, function(err) {
 

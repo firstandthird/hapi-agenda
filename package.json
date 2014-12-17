@@ -25,7 +25,9 @@
   "homepage": "https://github.com/firstandthird/hapi-agenda",
   "dependencies": {
     "agenda": "^0.6.26",
+    "joi": "^5.0.2",
     "lodash-node": "^2.4.1",
+    "mongoskin": "^1.4.4",
     "require-all": "^1.0.0"
   },
   "devDependencies": {

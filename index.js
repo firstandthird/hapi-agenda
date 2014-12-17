@@ -60,6 +60,15 @@ exports.register = function(plugin, options, next) {
   agenda.start();
 
   plugin.expose('agenda', agenda);
+  plugin.bind({
+    agenda: agenda,
+    options: options
+  });
+
+  var basePath = options.basePath || '';
+  var auth = options.auth || false;
+
+  plugin.route(_.values(require('./json-handler')(basePath, auth)));
 
   next();
 };

@@ -61,15 +61,14 @@ module.exports = function(path, auth) {
         validate: {
           payload: {
             name: Joi.string().required(),
-            now: Joi.boolean().default(false),
-            every: Joi.alternatives().when('now', { is: true, then: Joi.forbidden(), otherwise: [Joi.string().required(), Joi.number().required()] }),
+            every: Joi.alternatives().try(Joi.string(), Joi.number()).optional(),
             data: Joi.object().optional().default({})
           }
         },
         handler: function(request, reply) {
           var job;
 
-          if(request.payload.now) {
+          if(!request.payload.every) {
             job = this.agenda.now(request.payload.name, request.payload.data);
           } else {
             job = this.agenda.every(request.payload.every, request.payload.name, request.payload.data);

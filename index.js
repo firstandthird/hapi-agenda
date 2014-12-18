@@ -12,19 +12,19 @@ exports.register = function(plugin, options, next) {
   });
 
   agenda.on('start', function(job) {
-    plugin.log(['agenda', 'start'], job);
+    plugin.log(['agenda', 'start'], job.attrs);
   });
 
   agenda.on('complete', function(job) {
-    plugin.log(['agenda', 'complete'], job);
+    plugin.log(['agenda', 'complete'], job.attrs);
   });
 
   agenda.on('success', function(job) {
-    plugin.log(['agenda', 'success'], job);
+    plugin.log(['agenda', 'success'], job.attrs);
   });
 
   agenda.on('fail', function(err, job) {
-    plugin.log(['agenda', 'complete'], {err: err, job: job});
+    plugin.log(['agenda', 'complete'], {err: err, job: job.attrs});
   });
 
   if(options.jobs) {

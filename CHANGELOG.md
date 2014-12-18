@@ -1,4 +1,9 @@
 
+0.3.1 / 2014-12-18
+==================
+
+  * Removes requirement to pass now when creating a job.
+
 0.3.0 / 2014-12-18
 ==================
 

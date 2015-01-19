@@ -7,10 +7,6 @@ server.connection({
   port: 8080
 });
 
-// server.start(function () {
-//   console.log('Server running at:', server.info.uri);
-// });
-
 server.register({
   register: require('../'),
   options: {
@@ -23,7 +19,6 @@ server.register({
 
 });
 
-
 server.route({
   method: 'GET',
   path: '/',
@@ -32,13 +27,12 @@ server.route({
   }
 });
 
-
 server.route({
   method: 'GET',
   path: '/spawn-job',
   handler: function (request, reply) {
       reply('Spawning a new job.');
-      var batch = server.plugins['batch']['batch']; 
+      var batch = server.plugins['agenda']['batch']; 
       batch.batch('batch-777', { email: 'test@example.com'},'in 60 seconds', 'say-hello');
   }
 });

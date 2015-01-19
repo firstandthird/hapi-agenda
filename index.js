@@ -27,7 +27,7 @@ exports.register = function(plugin, options, next) {
     plugin.log(['agenda', 'complete'], { err: err, job: job.attrs });
   });
 
-  if ( options.jobs ) {
+  if (options.jobs) {
     jobs = require('require-all')(options.jobs);
   }
 
@@ -35,7 +35,7 @@ exports.register = function(plugin, options, next) {
     var opts = {};
     var name, method;
 
-    if ( typeof value === 'function' ) {
+    if (typeof value === 'function') {
       name = key;
       method = value;
     } else {
@@ -51,6 +51,12 @@ exports.register = function(plugin, options, next) {
     agenda.define(name, opts, method.bind(plugin));
 
   });
+
+  if (options.every) {
+    _.forIn(options.every, function(value, key) {
+      agenda.every(key, value);
+    });
+  }
 
   agenda.start();
 
@@ -68,12 +74,12 @@ exports.register = function(plugin, options, next) {
     options: options
   });
 
-  if ( options.jsonApi ) {
+  if (options.jsonApi) {
     plugin.route(_.values(require('./json-handler')(basePath, auth)));
   }
 
 }
 
 exports.register.attributes = {
-  name: 'batch'
+  name: 'agenda'
 };

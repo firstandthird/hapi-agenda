@@ -7,21 +7,42 @@ server.connection({
   port: 8080
 });
 
+// server.start(function () {
+//   console.log('Server running at:', server.info.uri);
+// });
+
 server.register({
   register: require('../'),
   options: {
     mongoUrl: 'localhost:27017/hapi-agenda',
     jobs: __dirname + '/jobs',
     processEvery: '5 seconds',
-    every: {
-      '10 seconds': 'say-hello',
-      '30 seconds': 'here is a task'
-    },
     jsonApi: true
   }
 }, function(err) {
 
-  server.start(function() {
-    server.log(['server', 'info'], 'Hapi server started '+ server.info.uri);
-  });
+});
+
+
+server.route({
+  method: 'GET',
+  path: '/',
+  handler: function (request, reply) {
+      reply('hapi-agenda example. Visit <a href="/spawn-job">/spawn-job</a> to create a new agenda batch job.');
+  }
+});
+
+
+server.route({
+  method: 'GET',
+  path: '/spawn-job',
+  handler: function (request, reply) {
+      reply('Spawning a new job.');
+      var batch = server.plugins['batch']['batch']; 
+      batch.batch('batch-777', { email: 'test@example.com'},'in 60 seconds', 'say-hello');
+  }
+});
+
+server.start(function() {
+  console.log('Server running at:', server.info.uri);
 });

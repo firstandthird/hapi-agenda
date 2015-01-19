@@ -77,6 +77,18 @@ module.exports = function(path, auth) {
           reply(job);
         }
       }
+    },
+    testThing: {
+      method: 'GET',
+      path: path + '/test-batch',
+      config: {
+        auth: auth,
+        handler: function(req, reply) {
+          this.batch.batch('batch-777', { email: 'frunk@example.com'}, 'in 40 seconds', 'say-hello');
+          //console.log(this);
+          reply('Job batched');
+        }
+      }
     }
   }
 };

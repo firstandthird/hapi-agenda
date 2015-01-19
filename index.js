@@ -1,16 +1,16 @@
 var Agenda = require('agenda');
+var Batch = require('agenda-batch');
 var _ = require('lodash-node');
 
 exports.register = function(plugin, options, next) {
-
   var mongoUrl = options.mongoUrl || 'localhost:27017/hapi-agenda';
-  var jobs = {};
 
   var agenda = new Agenda({
     db: { address: mongoUrl },
     processEvery: options.processEvery || '5 minutes'
   });
 
+  // Define the agenda handlers
   agenda.on('start', function(job) {
     plugin.log(['agenda', 'start'], job.attrs);
   });
@@ -24,10 +24,10 @@ exports.register = function(plugin, options, next) {
   });
 
   agenda.on('fail', function(err, job) {
-    plugin.log(['agenda', 'complete'], {err: err, job: job.attrs});
+    plugin.log(['agenda', 'complete'], { err: err, job: job.attrs });
   });
 
-  if(options.jobs) {
+  if (options.jobs) {
     jobs = require('require-all')(options.jobs);
   }
 
@@ -35,7 +35,7 @@ exports.register = function(plugin, options, next) {
     var opts = {};
     var name, method;
 
-    if(typeof value === 'function') {
+    if (typeof value === 'function') {
       name = key;
       method = value;
     } else {
@@ -49,9 +49,10 @@ exports.register = function(plugin, options, next) {
     }
 
     agenda.define(name, opts, method.bind(plugin));
+
   });
 
-  if(options.every) {
+  if (options.every) {
     _.forIn(options.every, function(value, key) {
       agenda.every(key, value);
     });
@@ -59,21 +60,25 @@ exports.register = function(plugin, options, next) {
 
   agenda.start();
 
+  var basePath = options.basePath || '';
+  var auth = options.auth || false;
+
+  var batch = new Batch( agenda );
+
   plugin.expose('agenda', agenda);
+  plugin.expose('batch', batch);
+
   plugin.bind({
+    batch: batch,
     agenda: agenda,
     options: options
   });
 
-  var basePath = options.basePath || '';
-  var auth = options.auth || false;
-
-  if(options.jsonApi) {
+  if (options.jsonApi) {
     plugin.route(_.values(require('./json-handler')(basePath, auth)));
   }
 
-  next();
-};
+}
 
 exports.register.attributes = {
   name: 'agenda'

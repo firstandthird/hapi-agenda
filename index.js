@@ -63,7 +63,7 @@ exports.register = function(plugin, options, next) {
   var basePath = options.basePath || '';
   var auth = options.auth || false;
 
-  var batch = new Batch( agenda );
+  var batch = new Batch(agenda);
 
   plugin.expose('agenda', agenda);
   plugin.expose('batch', batch);
@@ -78,7 +78,9 @@ exports.register = function(plugin, options, next) {
     plugin.route(_.values(require('./json-handler')(basePath, auth)));
   }
 
-}
+  next();
+
+};
 
 exports.register.attributes = {
   name: 'agenda'

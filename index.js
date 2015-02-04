@@ -24,7 +24,7 @@ exports.register = function(plugin, options, next) {
   });
 
   agenda.on('fail', function(err, job) {
-    plugin.log(['agenda', 'complete'], { err: err, job: job.attrs });
+    plugin.log(['agenda', 'error'], { err: err, job: job.attrs });
   });
 
   if (options.jobs) {
@@ -48,7 +48,10 @@ exports.register = function(plugin, options, next) {
       opts = value;
     }
 
-    agenda.define(name, opts, method.bind(plugin));
+    agenda.define(name, opts, function(data, done) {
+      plugin.log(['agenda', 'processing'], { opts: opts });
+      method.call(plugin, data, done);
+    });
 
   });
 

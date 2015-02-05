@@ -18,3 +18,4 @@ concurrent:
     - 'shell'
   options:
     logConcurrentOutput: true
+    limit: 4

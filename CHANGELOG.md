@@ -1,4 +1,11 @@
 
+0.5.0 / 2015-02-05
+==================
+
+  * Adding logging for queuing jobs #13
+  * fixing job error tag for #14
+
+
 0.4.1 / 2015-01-21
 ==================
 

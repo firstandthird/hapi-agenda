@@ -1,6 +1,6 @@
 var Hapi = require('hapi');
 
-var server = new Hapi.Server();
+var server = new Hapi.Server({ debug: {log: ['agenda'] } });
 
 server.connection({
   host: 'localhost',

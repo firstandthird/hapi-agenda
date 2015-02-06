@@ -49,7 +49,7 @@ exports.register = function(plugin, options, next) {
     }
 
     agenda.define(name, opts, function(data, done) {
-      plugin.log(['agenda', 'queue'], { opts: opts });
+      plugin.log(['agenda', 'queue'], { jobName: name, data: data });
       method.call(plugin, data, done);
     });
 

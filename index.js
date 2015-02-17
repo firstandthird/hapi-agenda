@@ -1,6 +1,7 @@
 var Agenda = require('agenda');
 var Batch = require('agenda-batch');
 var _ = require('lodash-node');
+var fs = require('fs');
 
 exports.register = function(plugin, options, next) {
   var mongoUrl = options.mongoUrl || 'localhost:27017/hapi-agenda';
@@ -27,7 +28,8 @@ exports.register = function(plugin, options, next) {
     plugin.log(['agenda', 'error'], { err: err, job: job.attrs });
   });
 
-  if (options.jobs) {
+  var jobs = {};
+  if (options.jobs && fs.existsSync(options.jobs)) {
     jobs = require('require-all')(options.jobs);
   }
 
@@ -43,7 +45,7 @@ exports.register = function(plugin, options, next) {
       method = value.job;
 
       delete value.name;
-      delete value.method;
+      delete value.job;
 
       opts = value;
     }

@@ -1,6 +1,6 @@
 {
   "name": "hapi-agenda",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "agenda plugin for hapi",
   "main": "index.js",
   "scripts": {

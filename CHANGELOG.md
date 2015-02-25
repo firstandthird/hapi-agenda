@@ -1,4 +1,10 @@
 
+0.6.0 / 2015-02-25
+==================
+
+  * added json endpoints for /job/{name}/enable and /job/{name}/disable
+
+
 0.5.2 / 2015-02-17
 ==================
 

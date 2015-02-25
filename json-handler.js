@@ -2,6 +2,7 @@ var Hapi = require('hapi');
 var Joi = require('joi');
 var mongo = require('mongoskin');
 var toObjectID = mongo.helper.toObjectID;
+var async = require('async');
 
 module.exports = function(path, auth) {
   return {
@@ -77,6 +78,55 @@ module.exports = function(path, auth) {
           reply(job);
         }
       }
+    },
+    disableJob: {
+      method: 'PUT',
+      path: path + '/job/{name}/disable',
+      config: {
+        auth: auth
+      },
+      handler: function(request, reply) {
+        this.agenda.jobs({ name: request.params.name }, function(err, jobs) {
+
+          if (err) {
+            return reply(err);
+          }
+
+          async.forEach(jobs, function(job, done) {
+            job.disable();
+            job.save(done);
+          }, function(err) {
+            console.log(arguments);
+            reply(err, 'disabled');
+          });
+
+
+        });
+      }
+    },
+    enableJob: {
+      method: 'PUT',
+      path: path + '/job/{name}/enable',
+      config: {
+        auth: auth
+      },
+      handler: function(request, reply) {
+        this.agenda.jobs({ name: request.params.name }, function(err, jobs) {
+
+          if (err) {
+            return reply(err);
+          }
+
+          async.forEach(jobs, function(job, done) {
+            job.enable();
+            job.save(done);
+          }, function(err) {
+            reply(err, 'enabled');
+          });
+
+
+        });
+      }
     }
-  }
+  };
 };

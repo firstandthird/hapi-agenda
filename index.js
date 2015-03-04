@@ -50,9 +50,9 @@ exports.register = function(plugin, options, next) {
       opts = value;
     }
 
-    agenda.define(name, opts, function(data, done) {
-      plugin.log(['agenda', 'queue'], { jobName: name, data: data });
-      method.call(plugin, data, done);
+    agenda.define(name, opts, function(job, done) {
+      plugin.log(['agenda', 'queue'], { jobName: name, job: job.attrs });
+      method.call(plugin, job, done);
     });
 
   });

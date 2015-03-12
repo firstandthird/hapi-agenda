@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/firstandthird/hapi-agenda",
   "dependencies": {
-    "agenda": "^0.6.26",
+    "agenda": "0.6.28",
     "agenda-batch": "0.0.1",
     "async": "^0.9.0",
     "joi": "^5.0.2",

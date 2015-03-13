@@ -6,7 +6,7 @@ var async = require('async');
 
 module.exports = function(path, auth) {
   return {
-    jobStats: {
+    jobs: {
       method: 'GET',
       path: path + '/jobs',
       config: {
@@ -18,6 +18,96 @@ module.exports = function(path, auth) {
             }
 
             reply(jobs);
+          });
+        }
+      }
+    },
+    jobStats: {
+      method: 'GET',
+      path: path + '/jobs/stats',
+      config: {
+        auth: auth,
+        handler: function(request, reply) {
+          var now = new Date();
+          var statsObject = {};
+          var agenda = this.agenda;
+
+          async.waterfall([
+            // Get the number of started jobs
+            function(cb){
+              statsObject.startedJobs = 0;
+              agenda.jobs({
+                disabled: { $ne: true },
+                $or: [
+                  {lockedAt: null},
+                  {lockedAt: {$lt: now}}
+                ],
+                lastRunAt: {$lt: now}
+              }, function(err, jobs) {
+
+                statsObject.startedJobs = jobs.length;
+                cb(null, statsObject);
+
+              });
+              
+            },
+            // Get the number of completed jobs
+            function(statObj, cb){
+              statObj.completedJobs = 0;
+              agenda.jobs({
+                disabled: { $ne: true },
+                lastFinishedAt: {$lt: now}
+              }, function(err, jobs) {
+
+                statObj.completedJobs = jobs.length;
+                cb(null, statObj);
+
+              });
+            },
+            // Get number of jobs that haven't completed
+            function(statObj, cb){
+              statObj.runningJobs = 0;
+              agenda.jobs({
+                disabled: { $ne: true },
+                lockedAt: {$lt: now},
+                lastRunAt: {$lt: now}, 
+                lastFinishedAt: {$exists: false}
+              }, function(err, jobs) {
+
+                statObj.runningJobs = jobs.length;
+                cb(null, statObj);
+
+              });
+            },
+            // Get the number of failed jobs
+            function(statObj, cb) {
+              statObj.failedJobs = 0;
+              agenda.jobs({
+                disabled: { $ne: true }, 
+                lastFinishedAt: {$lt: now},
+                failedAt: {$lt: now}
+              }, function(err, jobs) {
+
+                statObj.failedJobs = jobs.length;
+                cb(null, statObj);
+
+              });
+            },
+            // Number of jobs queued
+            function(statObj, cb) {
+              statObj.queuedJobs = 0;
+              agenda.jobs({
+                disabled: { $ne: true },
+                nextRunAt: {$gt: now}
+              }, function(err, jobs) {
+
+                statObj.queuedJobs = jobs.length;
+                cb(null, statObj);
+
+              });
+            }
+          ], function(err, result) {
+            reply(result);
           });
         }
       }

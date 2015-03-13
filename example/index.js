@@ -33,7 +33,9 @@ server.route({
   handler: function (request, reply) {
     reply('Spawning a new job.');
     var batch = server.plugins['agenda']['batch'];
-    batch.batch('batch-777', { email: 'test@example.com'},'in 60 seconds', 'say-hello');
+    batch.batch('batch-777', { email: 'test@example.com'}, 'in 20 seconds', 'say-hello');
+
+    batch.batch('batch-999', { random: Math.random() }, 'in 12 seconds', 'say-error')
   }
 });
 

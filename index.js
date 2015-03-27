@@ -58,8 +58,24 @@ exports.register = function(plugin, options, next) {
   });
 
   if (options.every) {
-    _.forIn(options.every, function(value, key) {
-      agenda.every(key, value);
+    _.forIn(options.every, function(opts, jobName) {
+      var interval = (typeof opts === 'string') ? opts : opts.interval;
+
+      console.log(jobName + ': ' + interval);
+
+      var enabled = (opts.enabled !== undefined)? opts.enabled : true;
+      
+      if(enabled == false)
+      {
+        return agenda.cancel({name: jobName}, function(err, numRemoved) {
+          if(err)
+          {
+            throw err;
+          }
+        });
+      }
+
+      agenda.every(jobName, interval);
     });
   }
 

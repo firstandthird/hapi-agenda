@@ -62,8 +62,7 @@ exports.register = function(plugin, options, next) {
       var interval = (typeof opts === 'string') ? opts : opts.interval;
       var enabled = (opts.enabled !== undefined)? opts.enabled : true;
       
-      if(enabled == false)
-      {
+      if (enabled == false) {
         return agenda.cancel({name: jobName}, function(err, numRemoved) {
           if(err)
           {

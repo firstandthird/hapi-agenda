@@ -15,15 +15,8 @@ server.register({
     processEvery: '5 seconds',
     jsonApi: true,
     every: {
-      'log-deu': {
-        interval: '1 minutes'
-      },
       'say-error' : {
         enabled: false
-      },
-      'log' : {
-        interval: '18 minutes',
-        enabled: true
       }
     }
   }

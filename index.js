@@ -64,7 +64,7 @@ exports.register = function(plugin, options, next) {
       
       if(enabled == false)
       {
-        console.log('canceling ' + jobName);
+        console.log('Cancelling: ' + jobName);
         return agenda.cancel({name: jobName}, function(err, numRemoved) {
           if(err)
           {

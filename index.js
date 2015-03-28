@@ -60,13 +60,11 @@ exports.register = function(plugin, options, next) {
   if (options.every) {
     _.forIn(options.every, function(opts, jobName) {
       var interval = (typeof opts === 'string') ? opts : opts.interval;
-
-      console.log(jobName + ': ' + interval);
-
       var enabled = (opts.enabled !== undefined)? opts.enabled : true;
       
       if(enabled == false)
       {
+        console.log('canceling ' + jobName);
         return agenda.cancel({name: jobName}, function(err, numRemoved) {
           if(err)
           {
@@ -75,7 +73,7 @@ exports.register = function(plugin, options, next) {
         });
       }
 
-      agenda.every(jobName, interval);
+      agenda.every(interval, jobName);
     });
   }
 

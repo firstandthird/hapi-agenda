@@ -13,7 +13,12 @@ server.register({
     mongoUrl: 'localhost:27017/hapi-agenda',
     jobs: __dirname + '/jobs',
     processEvery: '5 seconds',
-    jsonApi: true
+    jsonApi: true,
+    every: {
+      'say-error' : {
+        enabled: false
+      }
+    }
   }
 }, function(err) {
 

@@ -16,12 +16,23 @@ server.register({
     jsonApi: true,
     every: {
       'say-error' : {
-        enabled: false
+        enabled: false,
+        interval: '10 seconds'
       }
     }
   }
 }, function(err) {
 
+  console.log('waiting 2 seconds for server start');
+  setTimeout(function() {
+    server.method('testMethod', function() {
+      console.log('test');
+    });
+
+    server.start(function() {
+      console.log('Server running at:', server.info.uri);
+    });
+  }, 2000);
 });
 
 server.route({
@@ -51,8 +62,4 @@ server.route({
     request.server.plugins.agenda.agenda.every('30 seconds', 'log');
     reply('done');
   }
-});
-
-server.start(function() {
-  console.log('Server running at:', server.info.uri);
 });

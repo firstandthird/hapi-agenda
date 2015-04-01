@@ -61,7 +61,7 @@ exports.register = function(plugin, options, next) {
     _.forIn(options.every, function(opts, jobName) {
       var interval = (typeof opts === 'string') ? opts : opts.interval;
       var enabled = (opts.enabled !== undefined)? opts.enabled : true;
-      
+
       if (enabled == false) {
         return agenda.cancel({name: jobName}, function(err, numRemoved) {
           if(err)
@@ -75,7 +75,9 @@ exports.register = function(plugin, options, next) {
     });
   }
 
-  agenda.start();
+  plugin.on('start', function() {
+    agenda.start();
+  });
 
   var basePath = options.basePath || '';
   var auth = options.auth || false;

@@ -16,8 +16,8 @@ server.register({
     jobs: __dirname + '/jobs', // path to directory containing job files
     processEvery: '5 seconds', // Defaults to 30 seconds. Lower numbers = higher db calls
     every: { // Runs these jobs
-      '10 seconds': 'say-hello',
-      '30 seconds': 'here is a task'
+      'say-hello': '10 seconds',
+      'here is a task': '30 seconds'
     }
   }
 }, function(err) {

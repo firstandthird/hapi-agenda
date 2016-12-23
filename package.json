@@ -25,23 +25,23 @@
   },
   "homepage": "https://github.com/firstandthird/hapi-agenda",
   "dependencies": {
-    "agenda": "0.6.28",
+    "agenda": "0.9.0",
     "agenda-batch": "0.0.1",
-    "async": "^0.9.0",
-    "joi": "^5.0.2",
-    "lodash-node": "^2.4.1",
-    "mongoskin": "^1.4.4",
-    "require-all": "^1.0.0"
+    "async": "^2.1.4",
+    "joi": "^10.1.0",
+    "lodash-node": "^3.10.2",
+    "mongoskin": "^2.1.0",
+    "require-all": "^2.1.0"
   },
   "devDependencies": {
     "ft-jscs": "^1.0.0",
-    "grunt": "^0.4.5",
-    "grunt-concurrent": "^1.0.0",
-    "grunt-contrib-jshint": "^0.10.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-nodemon": "^0.3.0",
-    "grunt-shell": "^1.1.1",
-    "hapi": "^8.0.0",
-    "load-grunt-config": "^0.16.0"
+    "grunt": "^1.0.1",
+    "grunt-concurrent": "^2.3.1",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-nodemon": "^0.4.2",
+    "grunt-shell": "^2.1.0",
+    "hapi": "^16.0.2",
+    "load-grunt-config": "^0.19.2"
   }
 }
